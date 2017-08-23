@@ -1,6 +1,8 @@
 const log4js = require('log4js');
 const logger = log4js.getLogger('system');
 
+const fs = require('fs');
+const tls = require('tls');
 const knex = appRequire('init/knex').knex;
 const crypto = require('crypto');
 const path = require('path');
@@ -107,7 +109,13 @@ const checkData = (receive) => {
   }
 };
 
-const server = net.createServer(socket => {
+const certDir = path.join(__dirname, '..', 'certs');
+const serverOptions = {
+  key: fs.readFileSync(path.join(certDir, 'pri.pem')),
+  cert: fs.readFileSync(path.join(certDir, 'pri.cert.pem'))
+};
+
+const server = tls.createServer(serverOptions, socket => {
   const receive = {
     data: Buffer.from(''),
     socket: socket,

@@ -2,6 +2,7 @@ const log4js = require('log4js');
 const logger = log4js.getLogger('system');
 
 const net = require('net');
+const tls = require('tls');
 const path = require('path');
 const crypto = require('crypto');
 const config = appRequire('services/config').all();
@@ -49,7 +50,7 @@ const sendMessage = (data, options) => {
     options.host = options.host.split(':')[0];
   }
   const promise = new Promise((resolve, reject) => {
-    const client = net.connect(options || {
+    const client = tls.connect(options || {
       host,
       port,
     }, () => {
