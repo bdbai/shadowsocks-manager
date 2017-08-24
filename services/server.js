@@ -109,7 +109,7 @@ const checkData = (receive) => {
   }
 };
 
-const certDir = path.join(__dirname, '..', 'certs');
+const certDir = path.join(__filename, '..', '..', 'certs');
 const serverOptions = {
   key: fs.readFileSync(path.join(certDir, 'pri.pem')),
   cert: fs.readFileSync(path.join(certDir, 'pri.cert.pem'))
